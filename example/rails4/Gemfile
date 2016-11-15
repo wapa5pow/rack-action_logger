@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+# Install developed gem
+gem 'rack-action_logger', path: '../..'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.7.1'
