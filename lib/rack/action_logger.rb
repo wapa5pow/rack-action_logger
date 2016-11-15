@@ -25,4 +25,5 @@ module Rack::ActionLogger
   autoload :Container, 'rack/action_logger/container'
   autoload :Context, 'rack/action_logger/context'
   autoload :Emitter, 'rack/action_logger/emitter'
+  autoload :ControllerConcerns, 'rack/action_logger/controller_concerns'
 end

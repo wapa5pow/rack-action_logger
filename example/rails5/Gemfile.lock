@@ -1,3 +1,10 @@
+PATH
+  remote: ../..
+  specs:
+    rack-action_logger (0.1.0)
+      activesupport
+      fluent-logger (~> 0.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -53,6 +60,8 @@ GEM
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.14)
+    fluent-logger (0.6.1)
+      msgpack (>= 0.5.6, < 2)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -76,6 +85,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.9.1)
+    msgpack (1.0.2)
     multi_json (1.12.1)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
@@ -160,6 +170,7 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5)
   puma (~> 3.0)
+  rack-action_logger!
   rails (~> 5.0.0, >= 5.0.0.1)
   sass-rails (~> 5.0)
   spring

@@ -9,8 +9,8 @@ module Rack::ActionLogger::ControllerConcerns
     end
 
     def set_request_log
-      Rack::ActionLogger::Container.set_request_log({ path_info: @_env['PATH_INFO'], request_method: @_env['REQUEST_METHOD'] }, 'action.request')
-      Rack::ActionLogger::Container.merge_attributes({ request_id: @_env['action_dispatch.request_id'] })
+      Rack::ActionLogger::Container.set_request_log({ path_info: request.path_info, request_method: request.request_method }, 'action.request')
+      Rack::ActionLogger::Container.merge_attributes({ request_id: request.request_id })
     end
   end
 end
