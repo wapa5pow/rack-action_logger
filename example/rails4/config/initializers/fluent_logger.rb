@@ -1,0 +1,1 @@
+Fluent::Logger::FluentLogger.open

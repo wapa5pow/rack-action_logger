@@ -1,4 +1,6 @@
 require 'rack/action_logger/emit_adapter/logger_adapter'
+require 'rack/action_logger/emit_adapter/fluent_adapter'
+require 'rack/action_logger/emit_adapter/null_adapter'
 require 'logger'
 
 module Rack::ActionLogger
