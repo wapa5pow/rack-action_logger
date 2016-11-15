@@ -8,5 +8,6 @@ Bundler.require(*Rails.groups)
 
 module RailsExample
   class Application < Rails::Application
+    config.middleware.use Rack::ActionLogger
   end
 end
