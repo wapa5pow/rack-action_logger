@@ -37,15 +37,17 @@ Then, add Rack::ActionLogger as middleware to config/application.rb.
 config.middleware.use Rack::ActionLogger
 ```
 
+### Setup Initializations
+
 Under config/initializers, add the following files.
-^^
-### fluent_logger.rb
+
+#### fluent_logger.rb
 
 ```ruby
 Fluent::Logger::FluentLogger.open
 ```
 
-### rack-action_logger.rb
+#### rack-action_logger.rb
 
 ```ruby
 Rack::ActionLogger.configure do |config|
