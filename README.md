@@ -1,28 +1,95 @@
 # Rack::ActionLogger
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rack/action_logger`. To experiment with that code, run `bin/console` for an interactive prompt.
+**Rack::ActionLogger** is a tool to collect user action logs via fluentd, Rails.logger or any custome logger.
 
-TODO: Delete this and the text above, and describe your gem
+It is intended to collect user request log, action log and any other custome logs.
+
+**Rails 4 or Rails 5** is required to use it.
+
+## Sample Logs
+
+![sample logs](docs/sample_log.png)
+
+Under example folder, there are sample Rails applications to see how these sample logs are created.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your rails application's Gemfile:
 
 ```ruby
 gem 'rack-action_logger'
+gem 'fluent-logger'
 ```
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Then, add Rack::ActionLogger as middleware to config/application.rb.
 
-    $ gem install rack-action_logger
+```ruby
+config.middleware.use Rack::ActionLogger
+```
+
+Under config/initializers, add the following files.
+^^
+### fluent_logger.rb
+
+```ruby
+Fluent::Logger::FluentLogger.open
+```
+
+### rack-action_logger.rb
+
+```ruby
+Rack::ActionLogger.configure do |config|
+  config.emit_adapter = Rack::ActionLogger::EmitAdapter::FluentAdapter
+  config.wrap_key = :message
+  config.logger = Rails.logger
+end
+```
+
+If wrap_key is nil, the out put does not have parent key of wrap_key.
 
 ## Usage
 
-TODO: Write usage instructions here
+### Enable Request Log
+
+Add the following code to 'app/controllers/application_controller.rb'.
+
+```ruby
+include Rack::ActionLogger::ControllerConcerns::RequestLog
+```
+
+Request log should looks like this.
+
+![request logs](docs/request_log.png)
+
+Request can be customized by creating new request log concern.
+
+
+### Add Append Log
+
+Add the following code to any code on any times.
+
+```ruby
+Rack::ActionLogger::Container.set_append_log({ value: 'ok' }, 'action.activities')
+```
+
+Action log should looks like this.
+
+![action log](docs/action_log.png)
+
+### Override log attributes
+
+Overriden attributes are added to both request and append logs.
+
+```ruby
+Rack::ActionLogger::Container.merge_attributes({ user_id: 123 })
+```
+
+![attributed log](docs/attributed_log.png)
+
 
 ## Development
 
@@ -32,7 +99,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rack-action_logger. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/wapa5pow/rack-action_logger. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
