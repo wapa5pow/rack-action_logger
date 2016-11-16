@@ -98,6 +98,33 @@ Rack::ActionLogger::Container.merge_attributes({ user_id: 123 })
 
 ![attributed log](docs/attributed_log.png)
 
+### Logs out of request
+
+If Rails app uses background job system like sidekiq, exported context (e.g. log attributes and request_id) can be passed to the job.
+
+For example, a worker is the following.
+
+```ruby
+class TestWorker < ApplicationController
+  include Sidekiq::Worker
+  sidekiq_options queue: :test, retry: 5
+
+  def perform(title, context)
+    Rack::ActionLogger::Emitter.new.emit(context) do
+      Rack::ActionLogger::Container.set_append_log({ title: title }, 'action.worker')
+      p 'work: title=' + title
+    end
+  end
+
+end
+```
+
+To call the worker task, the app should call like the following.
+
+```ruby
+action_log_context = Rack::ActionLogger::Container.export
+TestWorker.perform_async('Worker Job', action_log_context)
+```
 
 ## Development
 

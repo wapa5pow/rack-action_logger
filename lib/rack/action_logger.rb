@@ -1,5 +1,3 @@
-require 'rack/action_logger/configuration'
-
 module Rack::ActionLogger
   class << self
     attr_accessor :configuration
