@@ -1,5 +1,9 @@
 # Rack::ActionLogger
 
+[![CircleCI](https://circleci.com/gh/wapa5pow/rack-action_logger.svg?style=shield)](https://circleci.com/gh/wapa5pow/rack-action_logger)
+[![Gem Version](https://badge.fury.io/rb/rack-action_logger.svg)](https://badge.fury.io/rb/rack-action_logger)
+[![Code Climate](https://codeclimate.com/github/wapa5pow/rack-action_logger/badges/gpa.svg)](https://codeclimate.com/github/wapa5pow/rack-action_logger)
+
 **Rack::ActionLogger** is a tool to collect user action logs via fluentd, Rails.logger or any custome logger.
 
 It is intended to collect user request log, action log and any other custome logs.
@@ -23,7 +27,9 @@ gem 'fluent-logger'
 
 And then execute:
 
-    $ bundle
+```
+bundle
+```
 
 Then, add Rack::ActionLogger as middleware to config/application.rb.
 
