@@ -12,7 +12,60 @@ It is intended to collect user request log, action log and any other custome log
 
 ## Sample Logs
 
-![sample logs](docs/sample_log.png)
+### Request log
+
+```json
+{
+  "message": {
+    "path": "/",
+    "method": "GET",
+    "params": {
+      "password": "[FILTERED]"
+    },
+    "request_headers": {
+      "HTTP_VERSION": "HTTP/1.1",
+      "HTTP_HOST": "localhost:3000",
+      "HTTP_CONNECTION": "keep-alive",
+      "HTTP_UPGRADE_INSECURE_REQUESTS": "1",
+      "HTTP_USER_AGENT": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36",
+      "HTTP_ACCEPT": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+      "HTTP_ACCEPT_ENCODING": "gzip, deflate, sdch, br",
+      "HTTP_ACCEPT_LANGUAGE": "ja,en-US;q=0.8,en;q=0.6",
+      "HTTP_COOKIE": "xxx"
+    },
+    "status_code": 200,
+    "remote_ip": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36",
+    "device": "pc",
+    "os": "Mac OSX",
+    "browser": "Chrome",
+    "browser_version": "54.0.2840.98",
+    "request_id": "150a6ac9-0fd9-4a23-a313-d18da1e35911",
+    "response_headers": {
+      "X-Frame-Options": "SAMEORIGIN",
+      "X-XSS-Protection": "1; mode=block",
+      "X-Content-Type-Options": "nosniff",
+      "Content-Type": "text/html; charset=utf-8"
+    },
+    "response_json_body": {
+    },
+    "tag": "action.rack",
+    "user_id": 123
+  }
+}
+```
+
+### Append log
+
+```json
+{
+  "message": {
+    "request_id": "150a6ac9-0fd9-4a23-a313-d18da1e35911",
+    "value": "with_tag",
+    "tag": "action.activities"
+  }
+}
+```
 
 Under example folder, there are sample Rails applications to see how these sample logs are created.
 
@@ -54,6 +107,7 @@ Rack::ActionLogger.configure do |config|
   config.emit_adapter = Rack::ActionLogger::EmitAdapter::FluentAdapter
   config.wrap_key = :message
   config.logger = Rails.logger
+  config.filters = Rails.application.config.filter_parameters
 end
 ```
 
@@ -63,30 +117,17 @@ If wrap_key is nil, the out put does not have parent key of wrap_key.
 
 ### Enable Request Log
 
-Add the following code to 'app/controllers/application_controller.rb'.
+Request log is automatically enabled
 
-```ruby
-include Rack::ActionLogger::ControllerConcerns::RequestLog
-```
-
-Request log should looks like this.
-
-![request logs](docs/request_log.png)
-
-Request can be customized by creating new request log concern.
-
+Request can be customized by creating new class for rack_metrics configuration.
 
 ### Add Append Log
 
 Add the following code to any code on any times.
 
 ```ruby
-Rack::ActionLogger::Container.set_append_log({ value: 'ok' }, 'action.activities')
+Rack::ActionLogger::Container.set_append_log({ value: 'ok' }, 'activities')
 ```
-
-Action log should looks like this.
-
-![action log](docs/action_log.png)
 
 ### Override log attributes
 
@@ -96,7 +137,18 @@ Overriden attributes are added to both request and append logs.
 Rack::ActionLogger::Container.merge_attributes({ user_id: 123 })
 ```
 
-![attributed log](docs/attributed_log.png)
+The append log is overrided by user_id attribute.
+
+```json
+{
+  "message": {
+    "request_id": "150a6ac9-0fd9-4a23-a313-d18da1e35911",
+    "value": "with_tag",
+    "uer_id": 123,
+    "tag": "action.activities"
+  }
+}
+```
 
 ### Logs out of request
 
@@ -111,7 +163,7 @@ class TestWorker < ApplicationController
 
   def perform(title, context)
     Rack::ActionLogger::Emitter.new.emit(context) do
-      Rack::ActionLogger::Container.set_append_log({ title: title }, 'action.worker')
+      Rack::ActionLogger::Container.set_append_log({ title: title }, 'worker')
       p 'work: title=' + title
     end
   end

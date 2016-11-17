@@ -25,4 +25,6 @@ module Rack::ActionLogger
   autoload :Emitter, 'rack/action_logger/emitter'
   autoload :ControllerConcerns, 'rack/action_logger/controller_concerns'
   autoload :EmitAdapter, 'rack/action_logger/emit_adapter'
+  autoload :ParameterFiltering, 'rack/action_logger/parameter_filtering'
+  autoload :Metrics, 'rack/action_logger/metrics'
 end

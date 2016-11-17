@@ -7,8 +7,16 @@ module Rack::ActionLogger
 
     def call(env)
       Emitter.new.emit do
-        @app.call(env)
+        status_code, headers, body = @app.call(env)
+        capture_rack_log(env, status_code, headers, body)
+        [status_code, headers, body]
       end
+    end
+
+    def capture_rack_log(env, status_code, headers, body)
+      rack_metrics = Rack::ActionLogger.configuration.rack_metrics.new(env, status_code, headers, body)
+      Rack::ActionLogger::Container.set_request_log(rack_metrics.metrics, rack_metrics.tag_suffix)
+      Rack::ActionLogger::Container.merge_attributes({ request_id: rack_metrics.request_id })
     end
 
   end
