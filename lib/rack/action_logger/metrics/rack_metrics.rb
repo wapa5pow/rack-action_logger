@@ -26,6 +26,7 @@ module Rack::ActionLogger::Metrics
     end
 
     def tag_suffix
+      return RACK_TAG_PREFIX if Rack::ActionLogger.configuration.rack_unified_tag
       if @status_code == 404
         tags = ['not_found']
       else
@@ -60,7 +61,7 @@ module Rack::ActionLogger::Metrics
     end
 
     def enable_metrics
-      Rack::ActionLogger.configuration.rack_content_types.any? { |c| content_type.include?(c) } || action_controller
+      Rack::ActionLogger.configuration.rack_content_types.any? { |c| content_type.to_s.include?(c) } || action_controller
     end
 
     def action_controller
