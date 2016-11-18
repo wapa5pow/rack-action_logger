@@ -9,6 +9,7 @@ module Rack::ActionLogger::Metrics
       :browser_version, :request_id, :response_headers, :response_json_body,
     ]
     RACK_TAG_PREFIX = 'rack'
+    EXCLUDE_PATH_PREFIX = '/asset'
 
     attr_reader :status_code
 
@@ -33,6 +34,7 @@ module Rack::ActionLogger::Metrics
     end
 
     def metrics
+      return unless action_controller
       METRICS.inject({}) do |result, metric|
         result[metric] = self.send(metric) unless
             Rack::ActionLogger.configuration.rack_request_blacklist.include? metric
@@ -54,6 +56,10 @@ module Rack::ActionLogger::Metrics
 
     def request_headers
       @env.select { |v| v.start_with? 'HTTP_' }
+    end
+
+    def action_controller
+      @env['action_controller.instance']
     end
 
     def remote_ip
