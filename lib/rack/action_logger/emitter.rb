@@ -39,7 +39,7 @@ module Rack::ActionLogger
     def emit_append_logs
       @container.get_append_logs.each do |hash|
         hash = format_tag(hash)
-        @emit_adapter.emit(@container.get_attributes.merge!(hash))
+        @emit_adapter.emit(@container.get_attributes.merge(hash))
       end
     end
 
