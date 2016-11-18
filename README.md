@@ -129,6 +129,14 @@ Add the following code to any code on any times.
 Rack::ActionLogger::Container.set_append_log({ value: 'ok' }, 'activities')
 ```
 
+### Add Model Logger
+
+Add the folloing line to ```config/initializers/rack-action_logger.rb``` at the end of line.
+
+```
+ActiveRecord::Base.send(:include, Rack::ActionLog::ActiveRecordExtension)
+```
+
 ### Override log attributes
 
 Overriden attributes are added to both request and append logs.
