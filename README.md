@@ -69,6 +69,24 @@ It is intended to collect user request log, action log and any other custome log
 
 Under example folder, there are sample Rails applications to see how these sample logs are created.
 
+### Model log
+
+```json
+{
+  "message": {
+    "user_id": null,
+    "request_id": "5aae4cc6-125b-4049-b555-502d6968e041",
+    "_method": "update",
+    "_after:updated_at": "2016-11-18 18:40:15 +0900",
+    "_before:updated_at": "2016-11-18 18:33:56 +0900",
+    "_after:views": 96,
+    "_before:views": 95,
+    "tag": "action.model_articles"
+  },
+  "tag": "action.model_articles"
+}
+```
+
 ## Installation
 
 Add this line to your rails application's Gemfile:
