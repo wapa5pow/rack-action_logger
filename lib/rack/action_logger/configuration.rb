@@ -15,6 +15,7 @@ module Rack::ActionLogger
     attr_accessor :rack_request_blacklist
     attr_accessor :pretty_print
     attr_accessor :rack_metrics
+    attr_accessor :rack_content_types
 
     def initialize
       @emit_adapter = EmitAdapter::LoggerAdapter
@@ -25,6 +26,7 @@ module Rack::ActionLogger
       @rack_request_blacklist = [:request_headers, :response_headers, :response_json_body]
       @pretty_print = true
       @rack_metrics = Rack::ActionLogger::Metrics::RackMetrics
+      @rack_content_types = %w(text/html application/json)
     end
 
     def tag_prefix

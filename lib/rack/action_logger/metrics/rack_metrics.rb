@@ -19,6 +19,7 @@ module Rack::ActionLogger::Metrics
       @headers = headers
       @body = body
       @request = Rack::Request.new(env)
+      @response = Rack::Response.new(body, status_code, headers)
       @ua = Woothee.parse(@request.user_agent)
       filters = Rack::ActionLogger.configuration.filters
       @compiled_filters = Rack::ActionLogger::ParameterFiltering.compile(filters)
@@ -34,7 +35,7 @@ module Rack::ActionLogger::Metrics
     end
 
     def metrics
-      return unless action_controller
+      return unless enable_metrics
       METRICS.inject({}) do |result, metric|
         result[metric] = self.send(metric) unless
             Rack::ActionLogger.configuration.rack_request_blacklist.include? metric
@@ -58,8 +59,16 @@ module Rack::ActionLogger::Metrics
       @env.select { |v| v.start_with? 'HTTP_' }
     end
 
+    def enable_metrics
+      Rack::ActionLogger.configuration.rack_content_types.any? { |c| content_type.include?(c) } || action_controller
+    end
+
     def action_controller
       @env['action_controller.instance']
+    end
+
+    def content_type
+      @response.content_type
     end
 
     def remote_ip

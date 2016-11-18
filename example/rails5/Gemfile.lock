@@ -1,7 +1,7 @@
 PATH
   remote: ../..
   specs:
-    rack-action_logger (0.1.2)
+    rack-action_logger (0.1.4)
       activesupport
       fluent-logger (~> 0.5)
       woothee (~> 1.4)
