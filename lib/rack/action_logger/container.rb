@@ -23,7 +23,7 @@ module Rack::ActionLogger
         store[:rack_action_logger_emit_started] ||= false
       end
 
-      def set_append_log(hash, tag)
+      def set_append_log(hash, tag=nil)
         return unless is_valid_hash hash
         return unless is_valid_tag tag
         hash[:tag] = tag
@@ -43,7 +43,7 @@ module Rack::ActionLogger
         store[:rack_action_logger_attributes] ||= {}
       end
 
-      def set_request_log(hash, tag)
+      def set_request_log(hash, tag=nil)
         return unless is_valid_hash hash
         return unless is_valid_tag tag
         hash[:tag] = tag
@@ -82,7 +82,7 @@ module Rack::ActionLogger
       end
 
       def is_valid_tag(tag)
-        if tag.is_a? String
+        if tag.nil? || tag.is_a?(String)
           true
         else
           Rack::ActionLogger.logger.error("invalid tag: #{tag}")

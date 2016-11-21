@@ -32,13 +32,24 @@ module Rack::ActionLogger
     def emit_request_log
       return unless (@container.get_request_log.is_a?(Hash) && @container.get_request_log != {})
       hash = @container.get_request_log.merge @container.get_attributes
+      hash = format_tag(hash)
       @emit_adapter.emit(hash)
     end
 
     def emit_append_logs
       @container.get_append_logs.each do |hash|
-        @emit_adapter.emit(@container.get_attributes.merge!(hash))
+        hash = format_tag(hash)
+        @emit_adapter.emit(@container.get_attributes.merge(hash))
       end
+    end
+
+    def format_tag(hash)
+      if hash[:tag]
+        hash[:tag] = [Rack::ActionLogger.configuration.tag_prefix, hash[:tag]].join('.')
+      else
+        hash[:tag] = Rack::ActionLogger.configuration.default_tag
+      end
+      hash
     end
   end
 end

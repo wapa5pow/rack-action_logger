@@ -21,7 +21,7 @@ RSpec.describe Rack::ActionLogger::Emitter do
 
     it 'can be nested but logged error' do
       adapter_mock = double('Emit Adapter')
-      expected = hash.merge({ tag: tag })
+      expected = hash.merge({ tag: "#{Rack::ActionLogger.configuration.tag_prefix}.#{tag}" })
       expect(adapter_mock).to receive(:emit).with(expected)
       Rack::ActionLogger::Container.set_request_log(hash, tag)
       emitter = described_class.new
@@ -42,6 +42,25 @@ RSpec.describe Rack::ActionLogger::Emitter do
       expect{ described_class.new.emit { raise StandardError } }.to raise_error(StandardError)
       expect(Rack::ActionLogger::Container.store).to be_empty
     end
+  end
 
+  describe 'format_tag' do
+    it 'should return correct tag without tag' do
+      Rack::ActionLogger.configure { |c| c.tag_prefix = 'access' }
+      hash = {}
+      expect(described_class.new.send(:format_tag, hash)[:tag]).to eq Rack::ActionLogger.configuration.default_tag
+    end
+
+    it 'should return correct tag with tag' do
+      Rack::ActionLogger.configure { |c| c.tag_prefix = 'access' }
+      hash = { tag: 'tag' }
+      expect(described_class.new.send(:format_tag, hash)[:tag]).to eq 'access.tag'
+    end
+
+    it 'should return correct tag without tag_prefix' do
+      Rack::ActionLogger.configure { |c| c.tag_prefix = nil }
+      hash = {}
+      expect(described_class.new.send(:format_tag, hash)[:tag]).to eq Rack::ActionLogger.configuration.default_tag
+    end
   end
 end

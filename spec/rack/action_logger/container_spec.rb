@@ -38,8 +38,14 @@ RSpec.describe Rack::ActionLogger::Container do
       expect(described_class.get_append_logs).to be append_log
     end
 
+    it 'should log with nil tag' do
+      expected = [hash.merge({ tag: nil })]
+      described_class.set_append_log(hash)
+      expect(described_class.get_append_logs).to eq expected
+    end
+
     it 'should not log without invalid tag' do
-      described_class.set_append_log(hash, nil)
+      described_class.set_append_log(hash, ['test'])
       expect(described_class.get_append_logs).to eq []
     end
 
@@ -76,7 +82,7 @@ RSpec.describe Rack::ActionLogger::Container do
       expect(described_class.get_request_log).to be {}
     end
 
-    it 'can merge attributes' do
+    it 'can get request log' do
       described_class.set_request_log(hash, tag)
       expected = hash.merge({ tag: tag })
       expect(described_class.get_request_log).to eq expected
@@ -89,8 +95,14 @@ RSpec.describe Rack::ActionLogger::Container do
     end
 
     it 'should not log without invalid hash' do
-      described_class.set_request_log(hash, nil)
+      described_class.set_request_log(hash, ['test'])
       expect(described_class.get_request_log).to be {}
+    end
+
+    it 'should log with nil tag' do
+      expected = hash.merge({ tag: nil })
+      described_class.set_request_log(hash)
+      expect(described_class.get_request_log).to eq expected
     end
 
     it 'should not log without invalid tag' do
