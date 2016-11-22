@@ -7,9 +7,6 @@ module Rack::ActionLogger
     EXPORT_KEYS = [:rack_action_logger_attributes]
 
     class << self
-      def store
-        Thread.current[THREAD_KEY] ||= {}
-      end
 
       def clear
         Thread.current[THREAD_KEY] = nil
@@ -71,6 +68,10 @@ module Rack::ActionLogger
       end
 
       private
+
+      def store
+        Thread.current[THREAD_KEY] ||= {}
+      end
 
       def is_valid_hash(hash)
         if hash.is_a? Hash

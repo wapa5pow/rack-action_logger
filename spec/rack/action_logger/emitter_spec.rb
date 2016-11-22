@@ -31,16 +31,16 @@ RSpec.describe Rack::ActionLogger::Emitter do
 
     it 'should clear container after emit' do
       Rack::ActionLogger::Container.set_request_log(hash, tag)
-      expect(Rack::ActionLogger::Container.store).not_to be_empty
+      expect(Rack::ActionLogger::Container.send(:store)).not_to be_empty
       described_class.new.emit {}
-      expect(Rack::ActionLogger::Container.store).to be_empty
+      expect(Rack::ActionLogger::Container.send(:store)).to be_empty
     end
 
     it 'should clear container after emit with exception' do
       Rack::ActionLogger::Container.set_request_log(hash, tag)
-      expect(Rack::ActionLogger::Container.store).not_to be_empty
+      expect(Rack::ActionLogger::Container.send(:store)).not_to be_empty
       expect{ described_class.new.emit { raise StandardError } }.to raise_error(StandardError)
-      expect(Rack::ActionLogger::Container.store).to be_empty
+      expect(Rack::ActionLogger::Container.send(:store)).to be_empty
     end
   end
 

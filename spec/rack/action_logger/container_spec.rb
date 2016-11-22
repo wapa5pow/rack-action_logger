@@ -7,7 +7,7 @@ RSpec.describe Rack::ActionLogger::Container do
 
   describe 'store' do
     it 'should return empty hash as default' do
-      expect(described_class.store).to be {}
+      expect(described_class.send(:store)).to be {}
     end
   end
 
