@@ -16,6 +16,7 @@ module Rack::ActionLogger
       self.class.column_names.each do |column_name|
         record["_#{column_name}"] = self.try(column_name)
       end
+      record = Rack::ActionLogger::ParameterFiltering.apply_filter(record)
       Rack::ActionLogger::Container.set_append_log(record, "model_#{self.class.table_name}")
     end
 
@@ -29,6 +30,7 @@ module Rack::ActionLogger
           record["_before:#{column_name}"] = self.try("#{column_name}_was")
         end
       end
+      record = Rack::ActionLogger::ParameterFiltering.apply_filter(record)
       Rack::ActionLogger::Container.set_append_log(record, "model_#{self.class.table_name}")
     end
 
@@ -39,6 +41,7 @@ module Rack::ActionLogger
           record["_#{column_name}"] = self.try(column_name)
         end
       end
+      record = Rack::ActionLogger::ParameterFiltering.apply_filter(record)
       Rack::ActionLogger::Container.set_append_log(record, "model_#{self.class.table_name}")
     end
   end
