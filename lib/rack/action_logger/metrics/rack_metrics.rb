@@ -21,8 +21,6 @@ module Rack::ActionLogger::Metrics
       @request = Rack::Request.new(env)
       @response = Rack::Response.new(body, status_code, headers)
       @ua = Woothee.parse(@request.user_agent)
-      filters = Rack::ActionLogger.configuration.filters
-      @compiled_filters = Rack::ActionLogger::ParameterFiltering.compile(filters)
     end
 
     def tag_suffix
@@ -53,7 +51,7 @@ module Rack::ActionLogger::Metrics
     end
 
     def params
-      Rack::ActionLogger::ParameterFiltering.apply_filter(@request.params, @compiled_filters)
+      Rack::ActionLogger::ParameterFiltering.apply_filter(@request.params)
     end
 
     def request_headers
@@ -108,7 +106,7 @@ module Rack::ActionLogger::Metrics
       response_bodies = []
       @body.each { |part| response_bodies << part } if @body
       result = JSON.parse(response_bodies.join('')) rescue {}
-      Rack::ActionLogger::ParameterFiltering.apply_filter(result, @compiled_filters)
+      Rack::ActionLogger::ParameterFiltering.apply_filter(result)
     end
   end
 end
