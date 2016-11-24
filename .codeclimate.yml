@@ -1,0 +1,9 @@
+ratings:
+  paths:
+  - lib/**
+exclude_paths:
+- spec/**/*
+- docs/**/*
+- example/**/*
+- spec/**/*
+- "**/vendor/**/*"
