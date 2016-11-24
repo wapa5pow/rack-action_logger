@@ -36,7 +36,7 @@ RSpec.describe Rack::ActionLogger::ActiveRecordExtension do
       }]
       @active_record_mock.class.send(:include, described_class)
       @active_record_mock.capture_action_log_create
-      expect(Rack::ActionLogger::Container.get_append_logs).to eq expected
+      expect(Rack::ActionLogger::Container.append_logs).to eq expected
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.describe Rack::ActionLogger::ActiveRecordExtension do
       }]
       @active_record_mock.class.send(:include, described_class)
       @active_record_mock.capture_action_log_update
-      expect(Rack::ActionLogger::Container.get_append_logs).to eq expected
+      expect(Rack::ActionLogger::Container.append_logs).to eq expected
     end
   end
 
@@ -64,7 +64,7 @@ RSpec.describe Rack::ActionLogger::ActiveRecordExtension do
       }]
       @active_record_mock.class.send(:include, described_class)
       @active_record_mock.capture_action_log_destroy
-      expect(Rack::ActionLogger::Container.get_append_logs).to eq expected
+      expect(Rack::ActionLogger::Container.append_logs).to eq expected
     end
   end
 

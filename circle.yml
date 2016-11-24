@@ -1,9 +1,0 @@
-deployment:
-  rubygems:
-    branch: master
-    commands:
-      - curl -u wapa5pow:$RUBYGEMS_PASSWORD https://rubygems.org/api/v1/api_key.yaml > ~/.gem/credentials; chmod 0600 ~/.gem/credentials
-      - git config user.name wapa5pow
-      - git config user.email wapa5pow@gmail.com
-      - bundle exec rake build
-      - bundle exec rake release

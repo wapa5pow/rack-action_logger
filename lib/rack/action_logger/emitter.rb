@@ -2,7 +2,7 @@ module Rack::ActionLogger
   class Emitter
 
     def initialize
-      @can_emit = !Container.get_is_emit_started
+      @can_emit = !Container.is_emit_started
       unless @can_emit
         Rack::ActionLogger.logger.error("#{self.class} is already defined.")
         Rack::ActionLogger.logger.error("#{Thread.current.backtrace.join("\n")}")
@@ -12,7 +12,7 @@ module Rack::ActionLogger
     end
 
     def emit(context=nil)
-      @container.set_is_emit_started
+      @container.is_emit_started = true
       @container.import(context) if context
       result = yield
       emit_all_logs  # emit log unless exception raised
@@ -30,16 +30,16 @@ module Rack::ActionLogger
     end
 
     def emit_request_log
-      return unless (@container.get_request_log.is_a?(Hash) && @container.get_request_log != {})
-      hash = @container.get_request_log.merge @container.get_attributes
+      return unless (@container.request_log.is_a?(Hash) && @container.request_log != {})
+      hash = @container.request_log.merge @container.attributes
       hash = format_tag(hash)
       @emit_adapter.emit(hash)
     end
 
     def emit_append_logs
-      @container.get_append_logs.each do |hash|
+      @container.append_logs.each do |hash|
         hash = format_tag(hash)
-        @emit_adapter.emit(@container.get_attributes.merge(hash))
+        @emit_adapter.emit(@container.attributes.merge(hash))
       end
     end
 

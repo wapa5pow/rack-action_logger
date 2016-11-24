@@ -17,7 +17,7 @@ module Rack::ActionLogger
         record["_#{column_name}"] = self.try(column_name)
       end
       record = Rack::ActionLogger::ParameterFiltering.apply_filter(record)
-      Rack::ActionLogger::Container.set_append_log(record, "model_#{self.class.table_name}")
+      Rack::ActionLogger::Container.add_append_log(record, "model_#{self.class.table_name}")
     end
 
     def capture_action_log_update
@@ -31,7 +31,7 @@ module Rack::ActionLogger
         end
       end
       record = Rack::ActionLogger::ParameterFiltering.apply_filter(record)
-      Rack::ActionLogger::Container.set_append_log(record, "model_#{self.class.table_name}")
+      Rack::ActionLogger::Container.add_append_log(record, "model_#{self.class.table_name}")
     end
 
     def capture_action_log_destroy
@@ -42,7 +42,7 @@ module Rack::ActionLogger
         end
       end
       record = Rack::ActionLogger::ParameterFiltering.apply_filter(record)
-      Rack::ActionLogger::Container.set_append_log(record, "model_#{self.class.table_name}")
+      Rack::ActionLogger::Container.add_append_log(record, "model_#{self.class.table_name}")
     end
   end
 end
