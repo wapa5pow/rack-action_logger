@@ -16,9 +16,11 @@ GEM
       tzinfo (~> 1.1)
     concurrent-ruby (1.0.2)
     diff-lcs (1.2.5)
+    docile (1.1.5)
     fluent-logger (0.6.1)
       msgpack (>= 0.5.6, < 2)
     i18n (0.7.0)
+    json (2.0.2)
     minitest (5.9.1)
     msgpack (1.0.2)
     rack (2.0.1)
@@ -38,6 +40,11 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    simplecov (0.12.0)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -52,6 +59,7 @@ DEPENDENCIES
   rack-test (~> 0.6.3)
   rake (~> 10.0)
   rspec (~> 3.0)
+  simplecov
 
 BUNDLED WITH
    1.13.6
