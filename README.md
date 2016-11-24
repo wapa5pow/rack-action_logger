@@ -144,7 +144,7 @@ Request can be customized by creating new class for rack_metrics configuration.
 Add the following code to any code on any times.
 
 ```ruby
-Rack::ActionLogger::Container.set_append_log({ value: 'ok' }, 'activities')
+Rack::ActionLogger::Container.add_append_log({ value: 'ok' }, 'activities')
 ```
 
 ### Add Model Logger
@@ -189,7 +189,7 @@ class TestWorker < ApplicationController
 
   def perform(title, context)
     Rack::ActionLogger::Emitter.new.emit(context) do
-      Rack::ActionLogger::Container.set_append_log({ title: title }, 'worker')
+      Rack::ActionLogger::Container.add_append_log({ title: title }, 'worker')
       p 'work: title=' + title
     end
   end
