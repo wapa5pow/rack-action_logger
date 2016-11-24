@@ -1,0 +1,5 @@
+deployment:
+  codeclimate:
+    branch: master
+    commands:
+      - bundle exec codeclimate-test-reporter

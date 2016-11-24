@@ -3,6 +3,7 @@
 [![CircleCI](https://circleci.com/gh/wapa5pow/rack-action_logger.svg?style=shield)](https://circleci.com/gh/wapa5pow/rack-action_logger)
 [![Gem Version](https://badge.fury.io/rb/rack-action_logger.svg)](https://badge.fury.io/rb/rack-action_logger)
 [![Code Climate](https://codeclimate.com/github/wapa5pow/rack-action_logger/badges/gpa.svg)](https://codeclimate.com/github/wapa5pow/rack-action_logger)
+[![Test Coverage](https://codeclimate.com/github/wapa5pow/rack-action_logger/badges/coverage.svg)](https://codeclimate.com/github/wapa5pow/rack-action_logger/coverage)
 
 **Rack::ActionLogger** is a tool to collect user action logs via fluentd, Rails.logger or any custome logger.
 
