@@ -153,7 +153,7 @@ Rack::ActionLogger::Container.add_append_log({ value: 'ok' }, 'activities')
 Add the folloing line to ```config/initializers/rack-action_logger.rb``` at the end of line.
 
 ```
-ActiveRecord::Base.send(:include, Rack::ActionLog::ActiveRecordExtension)
+ActiveRecord::Base.send(:include, Rack::ActionLogger::ActiveRecordExtension)
 ```
 
 ### Override log attributes
