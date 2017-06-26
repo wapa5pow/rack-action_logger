@@ -5,7 +5,7 @@ require 'woothee'
 module Rack::ActionLogger::Metrics
   class RackMetrics
     METRICS = [
-      :path, :method, :params, :request_headers, :status_code, :remote_ip, :user_agent, :device, :os, :browser,
+      :path, :method, :params, :request_headers, :status_code, :ip, :user_agent, :device, :os, :browser,
       :browser_version, :request_id, :response_headers, :response_json_body,
     ]
     RACK_TAG_PREFIX = 'rack'
@@ -70,7 +70,7 @@ module Rack::ActionLogger::Metrics
       @response.content_type
     end
 
-    def remote_ip
+    def ip
       @request.ip
     end
 

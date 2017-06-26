@@ -81,7 +81,7 @@ RSpec.describe Rack::ActionLogger::Metrics::RackMetrics do
 
   describe 'remote_ip' do
     it do
-      expect(target.remote_ip).to eq ip
+      expect(target.ip).to eq ip
     end
   end
 
