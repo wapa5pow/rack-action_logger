@@ -36,6 +36,7 @@ It is intended to collect user request log, action log and any other custome log
     },
     "status_code": 200,
     "ip": "127.0.0.1",
+    "remote_ip": "127.0.0.1",
     "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36",
     "device": "pc",
     "os": "Mac OSX",
