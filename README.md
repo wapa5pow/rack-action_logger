@@ -1,5 +1,7 @@
 # Rack::ActionLogger
 
+[![Join the chat at https://gitter.im/wapa5pow/rack-action_logger](https://badges.gitter.im/wapa5pow/rack-action_logger.svg)](https://gitter.im/wapa5pow/rack-action_logger?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![CircleCI](https://circleci.com/gh/wapa5pow/rack-action_logger.svg?style=shield)](https://circleci.com/gh/wapa5pow/rack-action_logger)
 [![Gem Version](https://badge.fury.io/rb/rack-action_logger.svg)](https://badge.fury.io/rb/rack-action_logger)
 [![Code Climate](https://codeclimate.com/github/wapa5pow/rack-action_logger/badges/gpa.svg)](https://codeclimate.com/github/wapa5pow/rack-action_logger)
