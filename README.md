@@ -11,7 +11,7 @@
 
 It is intended to collect user request log, action log and any other custome logs.
 
-**Rails 4 or Rails 5** is required to use it.
+**Rails 5.1 or above** is required to use it. If you want to use it with other than these versions, please use 0.3.0
 
 ## Sample Logs
 
