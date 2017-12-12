@@ -25,9 +25,9 @@ module Rack::ActionLogger
       self.class.column_names.each do |column_name|
         if column_name.end_with?('_id')
           record["_#{column_name}"] = self.try(column_name)
-        elsif self.try("#{column_name}_changed?")
+        elsif self.try("saved_change_to_#{column_name}?")
           record["_after:#{column_name}"] = self.try(column_name)
-          record["_before:#{column_name}"] = self.try("#{column_name}_was")
+          record["_before:#{column_name}"] = self.try("#{column_name}_before_last_save")
         end
       end
       record = Rack::ActionLogger::ParameterFiltering.apply_filter(record)
