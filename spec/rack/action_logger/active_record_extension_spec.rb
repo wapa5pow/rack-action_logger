@@ -17,12 +17,12 @@ RSpec.describe Rack::ActionLogger::ActiveRecordExtension do
     allow(@active_record_mock.class).to receive(:column_names).and_return(column_names)
     allow(@active_record_mock.class).to receive(:table_name).and_return('table_name')
     allow(@active_record_mock).to receive(:password).and_return('password')
-    allow(@active_record_mock).to receive(:password_changed?).and_return(true)
-    allow(@active_record_mock).to receive(:password_was).and_return('old_password')
+    allow(@active_record_mock).to receive(:saved_change_to_password?).and_return(true)
+    allow(@active_record_mock).to receive(:password_before_last_save).and_return('old_password')
     allow(@active_record_mock).to receive(:key).and_return('key')
-    allow(@active_record_mock).to receive(:key_changed?).and_return(false)
+    allow(@active_record_mock).to receive(:saved_change_to_key?).and_return(false)
     allow(@active_record_mock).to receive(:article_id).and_return(1234)
-    allow(@active_record_mock).to receive(:article_id_changed?).and_return(false)
+    allow(@active_record_mock).to receive(:saved_change_to_article_id?).and_return(false)
   }
 
   describe 'capture_action_log_create' do
@@ -67,5 +67,4 @@ RSpec.describe Rack::ActionLogger::ActiveRecordExtension do
       expect(Rack::ActionLogger::Container.append_logs).to eq expected
     end
   end
-
 end
